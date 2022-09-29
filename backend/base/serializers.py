@@ -16,3 +16,10 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class OrderSerializer(serializers.ModelSerializer):
+    """ShippingAddress Serializer"""
+    class Meta:
+        model = Order
+        fields = "__all__"
+
+

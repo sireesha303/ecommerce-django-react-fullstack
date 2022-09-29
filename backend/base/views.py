@@ -84,3 +84,48 @@ def get_shipping_address(request, id):
 # class PostListGenericView(generics.ListCreateAPIView):
 #     queryset = Product.objects.all()
 #     serializer_class = ProductSerializer
+
+
+@api_view(['GET'])
+def get_user_orders(request):
+    user = request.user
+    orders = Order.objects.filter(user=user)
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_order_details(request, id):
+    try:
+        order = Order.objects.get(id=id)
+        serializer = OrderSerializer(order, many=False)
+        return Response(serializer.data)
+    except Order.DoesNotExist:
+        raise Http404
+
+
+@api_view(['POST'])
+def create_order(request):
+    serializer = OrderSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def update_order(request, id):
+    try:
+        order = Order.objects.get(id=id)
+        serializer = OrderSerializer(instance=order, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
+    except Order.DoesNotExist:
+        raise Http404
+
+
+@api_view(['DELETE'])
+def delete_order(request, id):
+    order = Order.objects.get(id=id)
+    order.delete()
+    return Response("order Deleted Successfully!..")

@@ -8,7 +8,16 @@ urlpatterns = [
     path('products/<str:id>/', get_product_details),
     path('products/<str:id>/update/', update_product),
     path('products/<str:id>/delete/', delete_product),
+
     path('shipping-address/add/', add_shipping_address),
     path('shipping-address/<str:id>/', get_shipping_address),
     path('shipping-address/<str:id>/update/', update_shipping_address),
+
+    path('orders/', get_user_orders),
+    path('orders/add/', create_order),
+    path('orders/<str:id>/', get_order_details),
+    path('orders/<str:id>/update/', update_order),
+    path('orders/<str:id>/delete/', delete_order),
+
+
 ]
