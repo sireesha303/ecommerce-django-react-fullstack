@@ -28,3 +28,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = "__all__"
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    """Review Serializer"""
+    class Meta:
+        model = Review
+        fields = "__all__"
+

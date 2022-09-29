@@ -145,9 +145,16 @@ def add_order_item_to_order(request):
         serializer.save()
     return Response(serializer.data)
 
+
 @api_view(['DELETE'])
 def delete_order_item(request, id):
     order_item = OrderItem.objects.get(id=id)
     order_item.delete()
     return Response("order Deleted Successfully!..")
 
+
+@api_view(['GET'])
+def get_product_reviews(request, product_id):
+    reviews = Review.objects.filter(product__id=product_id)
+    serializer = ReviewSerializer(reviews, many=True)
+    return Response(serializer.data)

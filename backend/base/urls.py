@@ -23,4 +23,10 @@ urlpatterns = [
     path('orders/<str:id>/order-items/add/', add_order_item_to_order),
     path('orders/<str:id>/order-items/<str:id>/delete/', delete_order_item),
 
+
+    path('products/<str:id>/reviews/', get_product_reviews),
+    path('products/<str:id>/reviews/add/', add_product_review),
+    path('products/<str:id>/reviews/<str:id>/delete/', delete_product_review),    #For Admin Purpose
+
+
 ]
