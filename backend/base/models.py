@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
+
 class Product(models.Model):
     """Product model"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -9,7 +10,7 @@ class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    # image = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images')
     brand = models.CharField(max_length=100,null=True,blank=True)
     category = models.CharField(max_length=100,null=True,blank=True)
     rating = models.DecimalField(max_digits=7, decimal_places=2, null=True)

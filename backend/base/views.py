@@ -17,7 +17,7 @@ def get_products_list(request):
 def get_product_details(request, id):
     try:
         product = Product.objects.get(id=id)
-        serializer = ProductSerializer(product, many=True)
+        serializer = ProductSerializer(product, many=False)
         return Response(serializer.data)
     except Product.DoesNotExist:
         raise Http404
