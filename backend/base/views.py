@@ -129,3 +129,25 @@ def delete_order(request, id):
     order = Order.objects.get(id=id)
     order.delete()
     return Response("order Deleted Successfully!..")
+
+
+@api_view(['GET'])
+def get_order_Items_list(request, order_id):
+    order_itmes = OrderItem.objects.filter(order__id=order_id)
+    serializer = OrderItemSerializer(order_itmes, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def add_order_item_to_order(request):
+    serializer = OrderItemSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def delete_order_item(request, id):
+    order_item = OrderItem.objects.get(id=id)
+    order_item.delete()
+    return Response("order Deleted Successfully!..")
+

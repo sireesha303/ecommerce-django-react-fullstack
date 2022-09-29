@@ -23,3 +23,8 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class OrderItemSerializer(serializers.ModelSerializer):
+    """OrderItem Serializer"""
+    class Meta:
+        model = OrderItem
+        fields = "__all__"

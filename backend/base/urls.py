@@ -19,5 +19,8 @@ urlpatterns = [
     path('orders/<str:id>/update/', update_order),
     path('orders/<str:id>/delete/', delete_order),
 
+    path('orders/<str:id>/order-items/', get_order_Items_list),
+    path('orders/<str:id>/order-items/add/', add_order_item_to_order),
+    path('orders/<str:id>/order-items/<str:id>/delete/', delete_order_item),
 
 ]
