@@ -4,6 +4,7 @@ from .serializers import *
 from .models import *
 from rest_framework.response import Response
 from django.http import Http404
+from rest_framework import generics
 
 
 @api_view(['GET'])
@@ -49,3 +50,37 @@ def delete_product(request, id):
     product.delete()
     return Response("product Deleted Successfully!..")
 
+
+@api_view(['POST'])
+def add_shipping_address(request):
+    serializer = ShippingAddressSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def update_shipping_address(request, id):
+    try:
+        address = ShippingAddress.objects.get(id=id)
+        serializer = ShippingAddressSerializer(instance=address, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
+    except ShippingAddress.DoesNotExist:
+        raise Http404
+
+
+@api_view(['GET'])
+def get_shipping_address(request, id):
+    try:
+        shippingaddress = ShippingAddress.objects.get(id=id)
+        serializer = ShippingAddressSerializer(shippingaddress, many=False)
+        return Response(serializer.data)
+    except ShippingAddress.DoesNotExist:
+        raise Http404
+
+
+# class PostListGenericView(generics.ListCreateAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer

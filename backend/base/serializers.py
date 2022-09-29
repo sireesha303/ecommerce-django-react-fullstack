@@ -8,3 +8,11 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = "__all__"
 
+
+class ShippingAddressSerializer(serializers.ModelSerializer):
+    """ShippingAddress Serializer"""
+    class Meta:
+        model = ShippingAddress
+        fields = "__all__"
+
+
