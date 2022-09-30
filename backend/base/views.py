@@ -4,7 +4,7 @@ from .serializers import *
 from .models import *
 from rest_framework.response import Response
 from django.http import Http404
-from rest_framework import generics
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 @api_view(['GET'])
@@ -158,3 +158,25 @@ def get_product_reviews(request, product_id):
     reviews = Review.objects.filter(product__id=product_id)
     serializer = ReviewSerializer(reviews, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def add_product_review(request):
+    serializer = ReviewSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def delete_product_review(request, id):
+    review = Review.objects.get(id=id)
+    review.delete()
+    return Response("review Deleted Successfully!..")
+
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    """ Customized tokenpair view """
+    serializer_class = MyTokenObtainPairSerializer
+

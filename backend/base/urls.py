@@ -1,6 +1,11 @@
 
 from .views import *
 from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 
 urlpatterns = [
     path('products/', get_products_list),
@@ -21,12 +26,15 @@ urlpatterns = [
 
     path('orders/<str:id>/order-items/', get_order_Items_list),
     path('orders/<str:id>/order-items/add/', add_order_item_to_order),
-    path('orders/<str:id>/order-items/<str:id>/delete/', delete_order_item),
+    # path('orders/<str:id>/order-items/<str:id>/delete/', delete_order_item),
 
 
     path('products/<str:id>/reviews/', get_product_reviews),
     path('products/<str:id>/reviews/add/', add_product_review),
-    path('products/<str:id>/reviews/<str:id>/delete/', delete_product_review),    #For Admin Purpose
+    # path('products/<str:id>/reviews/<str:id>/delete/', delete_product_review),    #For Admin Purpose
 
+    path('users/login/', MyTokenObtainPairView.as_view(), name='user login view'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 ]
+
