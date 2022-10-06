@@ -38,18 +38,18 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#     "user serializer"
-#     name = serializers.SerializerMethodField()
-#     class Meta:
-#         model = User
-#         fields = ['id', 'username', 'email', 'is_superuser','name']
-#
-#     def get_name(self, obj):
-#         if (obj.first_name != None) and (obj.last_name != None):
-#             return obj.first_name+" "+obj.last_name
-#         else:
-#             return obj.username
+class UserSerializer(serializers.ModelSerializer):
+    "user serializer"
+    name = serializers.SerializerMethodField()
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'is_superuser','name']
+
+    def get_name(self, obj):
+        if (obj.first_name != "") and (obj.last_name != ""):
+            return obj.first_name+" "+obj.last_name
+        else:
+            return obj.username
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

@@ -34,7 +34,7 @@ urlpatterns = [
     # path('products/<str:id>/reviews/<str:id>/delete/', delete_product_review),    #For Admin Purpose
 
     path('users/login/', MyTokenObtainPairView.as_view(), name='user login view'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('users/', get_users_list, name="get all users list")
 ]
 
