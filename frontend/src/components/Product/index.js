@@ -1,23 +1,22 @@
 import { Row, Col, Card } from "react-bootstrap";
 import './index.css';
 import Rating from '../Rating/index';
-
+import {Link} from 'react-router-dom';
 
 const Product = ({product}) =>(
     <Row>
         <Col>
         <Card className="my-3 p-3 rounded">
-            <a href={`/product/${product.id}`}>
+            <Link to={`/product/${product.id}`}>
                 <Card.Img src={product.image}/>
-            </a>
-            <a href={`/product/${product.id}`} className="product-hyperlink">
+            </Link>
+            <Link to={`/product/${product.id}`} className="product-hyperlink">
                 <h3 className="text-dark m-3">{product.name}</h3>
-            </a> 
+            </Link> 
             <Card.Body>
                 <Card.Text as="div">
                     <div>
                         <Rating rating={product.rating} text={`${product.numReviews} numReviews`}/>
-                        {/* <p>{product.rating} from {product.numReviews} reviews</p> */}
                     </div>
                 </Card.Text>
                 <Card.Text as="h3">

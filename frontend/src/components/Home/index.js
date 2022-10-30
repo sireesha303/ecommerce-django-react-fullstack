@@ -8,7 +8,7 @@ const Home = () =>{
         <div className='m-3'>
             <Row>
                     {products.map(product =>(
-                        <Col sm={12} md={6} lg={4} xl={3}>
+                        <Col sm={12} md={6} lg={4} xl={4}>
                             <Product product={product}/>
                         </Col> 
                     ))}
