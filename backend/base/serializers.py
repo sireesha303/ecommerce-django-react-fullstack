@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -41,9 +42,10 @@ class ReviewSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     "user serializer"
     name = serializers.SerializerMethodField()
+    isAdmin = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'is_superuser','name']
+        fields = ['id', 'username', 'email', 'is_superuser', 'name', 'isAdmin']
 
     def get_name(self, obj):
         if (obj.first_name != "") and (obj.last_name != ""):
@@ -51,13 +53,44 @@ class UserSerializer(serializers.ModelSerializer):
         else:
             return obj.username
 
+    def get_isAdmin(self, obj):
+        return obj.is_staff
+
+
+class UserCreateSerializer(UserSerializer):
+    token = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'is_superuser', 'name', 'isAdmin', 'token']
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     """ Customized tokenpair view serializer """
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        token['name'] = user.username
 
-        return token
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        serializer = UserCreateSerializer(self.user).data
+
+        for k,v in serializer.items():
+            data[k] = v
+
+        return data
+    #
+    # @classmethod
+    # def get_token(cls, user):
+    #     token = super().get_token(user)
+    #
+    #
+    #     # token['name'] = user.username
+    #
+    #     return token
+
+
+
 

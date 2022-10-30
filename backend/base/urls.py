@@ -35,6 +35,7 @@ urlpatterns = [
 
     path('users/login/', MyTokenObtainPairView.as_view(), name='user login view'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('users/', get_users_list, name="get all users list")
+    path('users/', get_users_list, name="get all users list"),
+    path('users/register/', register_user, name="register new user")
 ]
 
